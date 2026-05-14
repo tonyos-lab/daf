@@ -1,0 +1,40 @@
+version: "1.0.0"
+tenant_id: "your-org"
+effective: "2026-01-01T00:00:00Z"
+
+agent_roles:
+  contract_analyst:
+    permitted_tools:
+      - read_file
+      - llm_extraction
+      - llm_classification
+    permitted_data_sources:
+      - contracts
+    permitted_task_types:
+      - deterministic
+      - llm_extraction
+      - llm_classification
+      - llm_summarization
+    max_llm_calls_per_step: 5
+
+budget_policy:
+  max_cost_per_call_usd: 0.05
+  max_cost_per_step_usd: 0.15
+  max_cost_per_workflow_usd: 0.50
+  max_cost_per_user_day_usd: 5.00
+  max_cost_per_tenant_day_usd: 50.00
+
+compliance_rules: []
+
+risk_policy:
+  irreversible_min_confidence: 0.90
+  always_gate_action_classes: []
+  auto_approve_action_classes:
+    - deterministic
+    - llm_extraction
+    - llm_classification
+    - llm_summarization
+
+loop_policy:
+  max_replan_attempts: 3
+  max_duration_s: 120

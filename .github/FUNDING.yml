@@ -1,0 +1,7 @@
+# Funding links shown on the GitHub repository page
+# Adds a "Sponsor" button visible to all visitors
+
+open_collective: daf
+github: [daf-framework]
+custom:
+  - https://opencollective.com/daf

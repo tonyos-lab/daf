@@ -1,0 +1,41 @@
+# SOX Tenant — financial controls compliance
+version: "1.0.0"
+tenant_id: "sox-tenant"
+effective: "2026-01-01T00:00:00Z"
+
+agent_roles:
+  document_processor:
+    permitted_tools: [read_document, llm_extraction, llm_evaluation]
+    permitted_data_sources: [documents, financial_records, pii_data]
+    permitted_task_types:
+      - deterministic
+      - llm_extraction
+      - llm_evaluation
+      - llm_summarization
+    max_llm_calls_per_step: 5
+
+budget_policy:
+  max_cost_per_call_usd: 0.05
+  max_cost_per_step_usd: 0.15
+  max_cost_per_workflow_usd: 0.50
+  max_cost_per_user_day_usd: 5.00
+  max_cost_per_tenant_day_usd: 50.00
+
+compliance_rules:
+  - rule_ref: "SOX-FINANCIAL-001"
+    condition:
+      field: "data_required"
+      operator: "contains"
+      value: "financial_records"
+    action: require_human_gate
+    remediation_hint: >
+      Access to financial records requires CFO approval for SOX compliance.
+
+risk_policy:
+  irreversible_min_confidence: 0.95
+  always_gate_action_classes: [llm_generation]
+  auto_approve_action_classes: [deterministic, llm_extraction, llm_evaluation, llm_summarization]
+
+loop_policy:
+  max_replan_attempts: 3
+  max_duration_s: 120

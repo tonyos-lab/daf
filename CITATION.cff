@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+message: "If you use DAF or the PBAS architecture in your research, please cite both the software and the paper."
+
+authors:
+  - family-names: "[Last Name]"
+    given-names: "[First Name]"
+    orcid: "https://orcid.org/XXXX-XXXX-XXXX-XXXX"
+
+title: "DAF — Deterministic Agentic Framework"
+version: 0.1.0
+date-released: 2026-01-01
+license: Apache-2.0
+repository-code: "https://github.com/daf-framework/daf"
+url: "https://daf-framework.org"
+
+abstract: >
+  DAF is the open-source reference implementation of
+  Policy-Based Agentic Systems (PBAS), a governed architecture
+  for production LLM systems. DAF implements the Governed Agentic
+  Loop — a closed-loop mechanism in which the LLM proposes plans,
+  a deterministic Policy Engine evaluates every proposal against
+  organizational policy, and an Execution Orchestrator acts
+  exclusively on approved plans with runtime-scoped permissions.
+
+keywords:
+  - large language models
+  - agentic AI
+  - AI governance
+  - policy-based systems
+  - deterministic orchestration
+  - enterprise AI
+  - responsible AI
+
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "[Last Name]"
+      given-names: "[First Name]"
+      orcid: "https://orcid.org/XXXX-XXXX-XXXX-XXXX"
+  title: "Policy-Based Agentic Systems (PBAS): Where the Model Proposes and the System Governs"
+  year: 2026
+  journal: "arXiv preprint"
+  doi: "XXXX.XXXXX"
+  url: "https://arxiv.org/abs/XXXX.XXXXX"

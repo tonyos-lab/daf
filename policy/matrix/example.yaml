@@ -1,0 +1,96 @@
+# DAF PolicyMatrix — Example Configuration
+# Copy this file and customize for your use case.
+# Validate with: python scripts/validate_policy_matrix.py policy/matrix/your_policy.yaml
+
+version: "1.0.0"
+tenant_id: "example-org"
+effective: "2026-01-01T00:00:00Z"
+
+# ── Agent Roles ──────────────────────────────────────────────
+# Define what each agent role is permitted to do.
+# Agents only have access to what is listed here — nothing more.
+
+agent_roles:
+
+  document_reader:
+    permitted_tools:
+      - read_db
+    permitted_data_sources:
+      - internal_documents
+      - public_documents
+    permitted_task_types:
+      - deterministic
+      - llm_extraction
+      - llm_summarization
+    max_llm_calls_per_step: 3
+
+  risk_analyzer:
+    permitted_tools:
+      - llm_extraction
+      - llm_evaluation
+    permitted_data_sources: []    # receives extracted text from document_reader only
+    permitted_task_types:
+      - llm_extraction
+      - llm_evaluation
+    max_llm_calls_per_step: 5
+
+  report_writer:
+    permitted_tools:
+      - llm_generation
+      - write_file
+    permitted_data_sources: []    # receives structured data only
+    permitted_task_types:
+      - llm_generation
+    max_llm_calls_per_step: 2
+
+# ── Orchestrator Routing ─────────────────────────────────────
+# Defines which orchestrators can spawn which agent roles.
+
+orchestrator_routing:
+
+  document_orchestrator:
+    may_spawn_roles:
+      - document_reader
+      - risk_analyzer
+      - report_writer
+
+# ── Budget Policy ────────────────────────────────────────────
+# All limits are hard — enforced before execution, not measured after.
+
+budget_policy:
+  max_cost_per_call_usd: 0.02
+  max_cost_per_step_usd: 0.10
+  max_cost_per_workflow_usd: 0.50
+  max_cost_per_user_day_usd: 5.00
+  max_cost_per_tenant_day_usd: 100.00
+
+# ── Compliance Rules ─────────────────────────────────────────
+# Evaluated per sub-task. Add your organization's rules here.
+
+compliance_rules:
+  - rule_ref: "DATA-INTERNAL-001"
+    condition:
+      field: "data_required"
+      operator: "contains"
+      value: "external_storage"
+    action: require_human_gate
+    remediation_hint: "External storage requires approval. Use internal_storage instead."
+
+# ── Risk Policy ──────────────────────────────────────────────
+
+risk_policy:
+  irreversible_min_confidence: 0.90
+  always_gate_action_classes:
+    - send_email
+    - delete_record
+    - external_api_write
+  auto_approve_action_classes:
+    - read_only
+    - generate_draft
+    - internal_write
+
+# ── Loop Policy ──────────────────────────────────────────────
+
+loop_policy:
+  max_replan_attempts: 3
+  max_duration_s: 300
