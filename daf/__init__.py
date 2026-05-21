@@ -26,7 +26,7 @@ Anthropic, Ollama, OpenAI, Gemini, local models, or any custom backend.
 https://github.com/tonyos-lab/daf
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __author__  = "Tony Ochinang"
 __license__ = "Apache-2.0"
 

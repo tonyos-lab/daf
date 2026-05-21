@@ -65,32 +65,16 @@
 - Inherited v0.1.1 fix: `_apply_ground_truth()` governance path corrected
 
 
-## [0.1.1] — 2026-05-20
+## [0.1.1] — 2026-05-21
 
 ### Fixed
-- `daf/stages/validator.py` — `_apply_ground_truth()` now correctly resolves
-  tool governance via both flat attributes (Stage 2 `MCPClient` `ToolInfo`) and
-  nested `governance` sub-object (v0.1.0 `ToolInfo`). Previously, tools with
-  a nested governance object would silently skip ground truth override, allowing
-  LLM annotations to stand unchallenged against tool config.
-- Extended ground truth override to include `may_access_pii`: a tool flagged
-  `may_access_pii=True` in governance config now overrides LLM annotation even
-  when the LLM claims `touches_pii=False`.
-- Updated `tests/stage2/test_rule_engine.py::test_no_override_when_annotation_matches`
-  to include `touches_pii=True` in the annotation, correctly matching the tool's
-  `may_access_pii=True` governance config.
-
-### Security
-- This fix closes a governance bypass path: without it, a Stage 2 adversarial
-  test demonstrated that a tool classified as `delete` in governance config could
-  have its annotation left as `read_only` if the `ToolInfo` used nested governance.
-  Found and fixed by the Stage 2 adversarial test suite.
-
-
-All notable changes to DAF are documented here.
-
-Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
-Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+- Corrected all repository URLs from `daf-framework` to `tonyos-lab`
+- Updated author information in `CITATION.cff`
+- Fixed test count (526 → 558) in `CHANGELOG.md` and `README.md`
+- Checked off completed Phase 1 items in `ROADMAP.md`
+- Removed Stage 2 code from public repository
+- Removed `RESEARCH_SETUP.md` (belongs in `daf-research` repo)
+- Fixed discussion and funding links in `CONTRIBUTING.md`, `.github/FUNDING.yml`
 
 ---
 

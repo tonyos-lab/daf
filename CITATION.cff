@@ -5,7 +5,7 @@ authors:
     given-names: Tony
     affiliation: TonyOS Lab
 title: "DAF — Deterministic Agentic Framework"
-version: 0.1.0
+version: 0.1.1
 date-released: 2026-05-14
 license: Apache-2.0
 repository-code: "https://github.com/tonyos-lab/daf"
