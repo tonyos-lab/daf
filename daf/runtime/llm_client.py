@@ -4,7 +4,6 @@ LLMClient — provider-agnostic interface for LLM calls.
 PlanningOrchestrator depends on this interface only.
 It never imports a specific provider.
 
-The only place that imports a concrete provider (e.g. anthropic)
 is the provider-specific implementation file.
 """
 from __future__ import annotations
@@ -101,11 +100,12 @@ class LLMClient(ABC):
     @abstractmethod
     async def complete(
         self,
-        system:     str,
-        user:       str,
-        schema:     dict,
-        max_tokens: int = 4096,
+        system:      str,
+        user:        str,
+        schema:      dict,
+        max_tokens:  int = 4096,
         max_retries: int = 2,
+        stage:       str = "",
     ) -> LLMResponse:
         """
         Call the LLM and return a schema-validated response.
@@ -116,6 +116,9 @@ class LLMClient(ABC):
             schema:      JSON Schema dict the response must conform to
             max_tokens:  Maximum tokens to generate
             max_retries: Retry attempts on schema validation failure
+            stage:       Which cognitive stage is calling (planner/validator/
+                         executor/collector). Used by MockLLMClient to select
+                         the correct fixture response.
 
         Returns:
             LLMResponse with validated content dict and usage stats

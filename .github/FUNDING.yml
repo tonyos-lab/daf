@@ -2,6 +2,6 @@
 # Adds a "Sponsor" button visible to all visitors
 
 open_collective: daf
-github: [daf-framework]
+github: [tonyos-lab]
 custom:
   - https://opencollective.com/daf

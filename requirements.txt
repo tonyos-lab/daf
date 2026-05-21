@@ -1,14 +1,10 @@
-# Core
-anthropic>=0.40.0
+# DAF v0.1.0 — core dependencies
 pydantic>=2.0.0
-pyyaml>=6.0
-python-dotenv>=1.0.0
 
-# Storage
-asyncpg>=0.29.0
-redis>=5.0.0
-
-# Observability
-opentelemetry-sdk>=1.20.0
-opentelemetry-exporter-otlp>=1.20.0
-structlog>=24.0.0
+# LLM provider — NOT included. Implement LLMClient for your preferred provider.
+# See daf/runtime/llm_client.py for the interface.
+#
+# Examples:
+#   pip install anthropic   # if using Anthropic
+#   pip install openai      # if using OpenAI-compatible API
+#   pip install ollama      # if using Ollama Python client

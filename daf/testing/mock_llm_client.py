@@ -2,7 +2,7 @@
 MockLLMClient — a developer-controlled LLM client for testing and development.
 
 Allows developers to provide their own plan responses without a real API key.
-Works as a drop-in replacement for AnthropicLLMClient in GovernedAgenticLoop.
+Works as a drop-in replacement for any LLMClient implementation.
 
 DESIGN:
   The real LLM returns a PlanProposal dict.
@@ -123,6 +123,7 @@ class MockLLMClient(LLMClient):
         schema:      dict,
         max_tokens:  int = 4096,
         max_retries: int = 2,
+        stage:       str = "",
     ) -> LLMResponse:
         """
         Return the next developer-provided response.

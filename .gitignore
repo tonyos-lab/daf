@@ -32,3 +32,8 @@ Thumbs.db
 # DAF runtime
 *.db
 *.sqlite
+
+# Research findings — commit selectively
+findings/**/*.log
+findings/**/*.json
+!findings/.gitkeep

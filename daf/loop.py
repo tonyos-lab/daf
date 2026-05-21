@@ -46,14 +46,21 @@ class GovernedAgenticLoop:
       - AuditStore + CheckpointStore injectable
 
     Usage:
-        from daf.runtime.anthropic_client import AnthropicLLMClient
+        from daf.runtime.llm_client import LLMClient, LLMResponse, LLMUsage
 
-        client = AnthropicLLMClient(api_key="sk-ant-...")
-        loop   = GovernedAgenticLoop(
-            llm_client=client,
-            policy_matrix="policy/matrix/example.yaml",
+        class MyClient(LLMClient):
+            async def complete(self, system, user, schema) -> LLMResponse: ...
+            def estimate_cost(self, input_tokens, output_tokens) -> float: ...
+            @property
+            def model_id(self) -> str: ...
+
+        loop = GovernedAgenticLoop(
+            llm_client=MyClient(),
+            policy_matrix="policies/default.yaml",
         )
         result = await loop.run({"task": "Analyse the contracts"})
+
+    DAF is provider-agnostic. Implement LLMClient for any model backend.
     """
 
     def __init__(

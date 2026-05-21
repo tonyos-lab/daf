@@ -1,63 +1,47 @@
+# DAF v0.2.0 — Docker Compose
+# Usage:
+#   cp .env.example .env    # configure your LLM client
+#   docker-compose up -d
+#   open http://localhost:8000
+
 version: "3.9"
 
 services:
-  postgres:
-    image: postgres:16-alpine
+  daf:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./daf.yaml:/app/daf.yaml:ro
+      - ./agents:/app/agents:ro
+      - ./tools:/app/tools:ro
+      - ./policies:/app/policies:ro
+      - ./workflows:/app/workflows:ro
+      - daf_db:/app/db
     environment:
-      POSTGRES_USER: daf
-      POSTGRES_PASSWORD: daf
-      POSTGRES_DB: daf
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
-    ports:
-      - "5432:5432"
+      - DAF_ENV=production
+    env_file:
+      - .env
+    restart: unless-stopped
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "daf"]
-      interval: 5s
-      timeout: 3s
-      retries: 5
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
-  redis:
-    image: redis:7-alpine
-    command: redis-server --appendonly yes
-    volumes:
-      - redis_data:/data
-    ports:
-      - "6379:6379"
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 5s
-
-  prometheus:
-    image: prom/prometheus:latest
-    volumes:
-      - ./scripts/prometheus.yml:/etc/prometheus/prometheus.yml
-    ports:
-      - "9090:9090"
-      - "9091:9091"
-
-  grafana:
-    image: grafana/grafana:latest
-    environment:
-      GF_SECURITY_ADMIN_PASSWORD: daf
-      GF_AUTH_ANONYMOUS_ENABLED: "true"
-      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
-    volumes:
-      - grafana_data:/var/lib/grafana
-    ports:
-      - "3000:3000"
-    depends_on:
-      - prometheus
-
-  adminer:
-    image: adminer:latest
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgres
+  # Optional: Ollama for local model serving
+  # Uncomment if your LLMClient uses Ollama
+  # ollama:
+  #   image: ollama/ollama:latest
+  #   ports:
+  #     - "11434:11434"
+  #   volumes:
+  #     - ollama_models:/root/.ollama
+  #   restart: unless-stopped
 
 volumes:
-  postgres_data:
-  redis_data:
-  grafana_data:
+  daf_db:
+  # ollama_models:

@@ -15,7 +15,7 @@ Read the [architecture overview](docs/architecture.md) to understand PBAS and th
 ### For researchers
 - Run experiments from the [Research Backlog](docs/research/README.md)
 - Reproduce and validate findings
-- Propose new research questions via [GitHub Discussions](https://github.com/daf-framework/daf/discussions)
+- Propose new research questions via [GitHub Discussions](https://github.com/tonyos-lab/daf/discussions)
 - Co-author findings documents
 
 ### For engineers
@@ -40,7 +40,7 @@ Read the [architecture overview](docs/architecture.md) to understand PBAS and th
 ## Development Setup
 
 ```bash
-git clone https://github.com/daf-framework/daf
+git clone https://github.com/tonyos-lab/daf
 cd daf
 python -m venv .venv
 source .venv/bin/activate        # macOS/Linux
@@ -132,4 +132,4 @@ All contributors are expected to follow the [Code of Conduct](CODE_OF_CONDUCT.md
 
 ## Questions?
 
-Open a [Discussion](https://github.com/daf-framework/daf/discussions) — not an Issue. Issues are for bugs and feature requests. Discussions are for questions, ideas, and research conversations.
+Open a [Discussion](https://github.com/tonyos-lab/daf/discussions) — not an Issue. Issues are for bugs and feature requests. Discussions are for questions, ideas, and research conversations.

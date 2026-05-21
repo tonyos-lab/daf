@@ -15,7 +15,7 @@ Get DAF running locally in 15 minutes.
 ## Install
 
 ```bash
-git clone https://github.com/daf-framework/daf
+git clone https://github.com/tonyos-lab/daf
 cd daf
 python -m venv .venv
 source .venv/bin/activate    # macOS/Linux

@@ -64,7 +64,6 @@ from daf.models.policy_matrix import (
     PolicyMatrix, AgentRoleConfig, BudgetPolicyConfig,
     LoopPolicyConfig, RiskPolicyConfig,
 )
-from daf.runtime.anthropic_client import AnthropicLLMClient
 from daf.runtime.llm_client import LLMClientError, LLMOutputError
 
 
@@ -182,8 +181,17 @@ def make_restrictive_matrix_yaml(tmp_path) -> str:
 
 # ── Helper ────────────────────────────────────────────────────
 
-def make_client() -> AnthropicLLMClient:
-    """Build an AnthropicLLMClient from environment."""
+def make_client():
+    """
+    Build an LLMClient from environment.
+
+    This test file uses AnthropicLLMClient as the live test client.
+    To run these tests with a different provider, replace this function
+    with your own LLMClient implementation.
+
+    Requires: pip install anthropic
+    """
+    from daf.runtime.anthropic_client import AnthropicLLMClient
     return AnthropicLLMClient(
         api_key=os.getenv("LLM_API_KEY"),
         model=os.getenv("LLM_MODEL", "claude-haiku-4-5-20251001"),
@@ -473,7 +481,7 @@ class TestPhase1SchemaEnforcement:
         """
         The LLM response is parsed into a PlanProposal dict — not prose.
 
-        Verifies AnthropicLLMClient.complete() returns a dict,
+        Verifies the LLMClient.complete() contract returns a valid response,
         not a string or other type.
         """
         client = make_client()

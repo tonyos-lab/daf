@@ -44,7 +44,7 @@ This Code of Conduct applies within all community spaces — GitHub Issues, Pull
 
 ## Reporting
 
-Instances of abusive, harassing, or otherwise unacceptable behaviour may be reported to the project maintainers at **[conduct@daf-framework.org]**. All complaints will be reviewed and investigated promptly and fairly. All maintainers are obligated to respect the privacy and security of the reporter.
+Instances of abusive, harassing, or otherwise unacceptable behaviour may be reported to the project maintainers at **[conduct@tonyos-lab.org]**. All complaints will be reviewed and investigated promptly and fairly. All maintainers are obligated to respect the privacy and security of the reporter.
 
 ---
 

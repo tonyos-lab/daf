@@ -4,7 +4,7 @@
 
 DAF is the reference implementation of **Policy-Based Agentic Systems (PBAS)** — a framework for building agentic AI applications where the LLM generates plans but a deterministic policy engine controls what actually executes.
 
-[![Tests](https://img.shields.io/badge/tests-561%20passing-brightgreen)](tests/)
+[![Tests](https://img.shields.io/badge/tests-558%20passing-brightgreen)](tests/)
 [![Version](https://img.shields.io/badge/version-0.1.0-blue)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green)](LICENSE)
 [![Lab](https://img.shields.io/badge/lab-TonyOS%20Lab-orange)](https://tonyos-lab.org)
@@ -84,7 +84,7 @@ WorkflowRequest
 ```python
 import asyncio, os
 from daf import GovernedAgenticLoop
-from daf.runtime.anthropic_client import AnthropicLLMClient
+# from your_module import YourLLMClient  # implement BaseLLMClient
 from daf.runtime.agent_registry import AgentRegistry
 from daf.runtime.tool_registry import ToolRegistry
 
@@ -166,8 +166,8 @@ daf/
     testing/              MockLLMClient, FixturePlanBuilder
   tests/
     unit/                 461 tests
-    adversarial/          53 security tests
-    integration/          35 mocked integration tests
+    adversarial/          53 adversarial tests
+    integration/          mocked integration tests
   examples/
     01_basic_analysis/    happy path
     02_replan_loop/       self-correction

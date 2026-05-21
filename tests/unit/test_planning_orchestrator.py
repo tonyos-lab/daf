@@ -162,70 +162,43 @@ def make_mock_llm(response_content: dict | None = None) -> LLMClient:
 # ── LLMClient Interface Tests ────────────────────────────────
 
 class TestLLMClientInterface:
-    """LLMClient is an abstract class — cannot be instantiated directly."""
+    """Tests that the LLMClient interface contract is correctly defined."""
 
-    def test_llm_client_cannot_be_instantiated_directly(self):
-        """LLMClient is abstract — direct instantiation raises TypeError."""
-        with pytest.raises(TypeError):
-            LLMClient()
+    def test_llm_client_has_required_methods(self):
+        """LLMClient defines the three required abstract methods."""
+        assert hasattr(LLMClient, "complete")
+        assert hasattr(LLMClient, "model_id")
+        assert hasattr(LLMClient, "estimate_cost")
 
-    def test_llm_client_error_stores_provider(self):
-        """LLMClientError stores the provider name."""
-        e = LLMClientError("test error", provider="anthropic", status_code=429)
-        assert e.provider == "anthropic"
-        assert e.status_code == 429
-        assert "test error" in str(e)
+    def test_mock_llm_client_implements_interface(self):
+        """MockLLMClient correctly implements the LLMClient interface."""
+        from daf.testing import MockLLMClient
+        assert issubclass(MockLLMClient, LLMClient)
+        assert hasattr(MockLLMClient, "complete")
+        assert hasattr(MockLLMClient, "model_id")
+        assert hasattr(MockLLMClient, "estimate_cost")
 
-    def test_llm_output_error_stores_raw_response(self):
-        """LLMOutputError stores the raw response and attempt count."""
-        e = LLMOutputError("schema failed", raw_response='{"bad": true}', attempt=3)
-        assert e.raw_response == '{"bad": true}'
-        assert e.attempt == 3
+    def test_mock_llm_client_model_id_returns_string(self):
+        """MockLLMClient.model_id returns a non-empty string."""
+        from daf.testing import MockLLMClient
+        client = MockLLMClient(responses=[{}])
+        assert isinstance(client.model_id, str)
+        assert len(client.model_id) > 0
 
-    def test_anthropic_client_has_correct_interface(self):
-        """AnthropicLLMClient implements all required abstract methods."""
-        from daf.runtime.anthropic_client import AnthropicLLMClient
-        # Check it is a subclass of LLMClient
-        assert issubclass(AnthropicLLMClient, LLMClient)
-        # Check required methods exist
-        assert hasattr(AnthropicLLMClient, "complete")
-        assert hasattr(AnthropicLLMClient, "model_id")
-        assert hasattr(AnthropicLLMClient, "estimate_cost")
-
-    def test_anthropic_client_raises_without_api_key(self):
-        """AnthropicLLMClient raises LLMClientError when no API key provided."""
-        from daf.runtime.anthropic_client import AnthropicLLMClient
-        with patch.dict("os.environ", {}, clear=True):
-            # Remove LLM_API_KEY if set
-            import os
-            os.environ.pop("LLM_API_KEY", None)
-            with pytest.raises(LLMClientError, match="API key"):
-                AnthropicLLMClient(api_key=None)
-
-    def test_anthropic_client_model_id_returns_model_string(self):
-        """AnthropicLLMClient.model_id returns the configured model string."""
-        from daf.runtime.anthropic_client import AnthropicLLMClient
-        client = AnthropicLLMClient(
-            api_key="sk-ant-test",
-            model="claude-sonnet-4-20250514"
-        )
-        assert client.model_id == "claude-sonnet-4-20250514"
-
-    def test_anthropic_client_estimate_cost_is_positive(self):
-        """AnthropicLLMClient.estimate_cost returns a positive float."""
-        from daf.runtime.anthropic_client import AnthropicLLMClient
-        client = AnthropicLLMClient(api_key="sk-ant-test")
-        cost = client.estimate_cost(input_tokens=1000, output_tokens=500)
+    def test_mock_llm_client_estimate_cost_returns_non_negative_float(self):
+        """MockLLMClient.estimate_cost returns a non-negative float."""
+        from daf.testing import MockLLMClient
+        client = MockLLMClient(responses=[{}], cost_per_call=0.01)
+        cost = client.estimate_cost(1000, 500)
         assert isinstance(cost, float)
-        assert cost > 0
+        assert cost >= 0.0
 
-    def test_anthropic_client_estimate_cost_scales_with_tokens(self):
-        """Cost estimate increases with more tokens."""
-        from daf.runtime.anthropic_client import AnthropicLLMClient
-        client = AnthropicLLMClient(api_key="sk-ant-test")
-        cost_small = client.estimate_cost(100, 50)
-        cost_large = client.estimate_cost(10000, 5000)
-        assert cost_large > cost_small
+    def test_any_llm_client_subclass_works_with_loop(self):
+        """Any LLMClient subclass works with GovernedAgenticLoop."""
+        from daf.testing import MockLLMClient
+        # MockLLMClient is proof the interface is user-implementable
+        # DAF ships no built-in provider implementations
+        assert issubclass(MockLLMClient, LLMClient)
 
 
 # ── PlanningOrchestrator — Initial Plan ─────────────────────

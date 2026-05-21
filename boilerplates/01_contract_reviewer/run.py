@@ -19,7 +19,17 @@ if env_file.exists():
 from agents import build_agent_registry
 from tools import build_tool_registry
 from daf import GovernedAgenticLoop
-from daf.runtime.anthropic_client import AnthropicLLMClient
+from daf.runtime.llm_client import LLMClient
+
+# Implement LLMClient for your preferred provider.
+# See daf/runtime/llm_client.py for the interface.
+#
+# Example (Ollama):
+#   class MyOllamaClient(LLMClient):
+#       async def complete(self, system, user, schema) -> LLMResponse: ...
+#       def estimate_cost(self, input_tokens, output_tokens) -> float: ...
+#       @property
+#       def model_id(self) -> str: ...
 
 MATRIX = str(Path(__file__).parent / "policy" / "matrix.yaml")
 
@@ -31,7 +41,7 @@ async def main():
         return
 
     loop = GovernedAgenticLoop(
-        llm_client=AnthropicLLMClient(api_key=os.getenv("LLM_API_KEY")),
+        llm_client=YOUR_LLM_CLIENT,  # TODO: replace with your LLMClient instance
         policy_matrix=MATRIX,
         agent_registry=build_agent_registry(),
         tool_registry=build_tool_registry(),
@@ -51,6 +61,8 @@ async def main():
     if result.result:
         for step in result.result:
             print(f"  {'✓' if step['success'] else '✗'} {step['task_id']}")
+
+
 
 if __name__ == "__main__":
     asyncio.run(main())

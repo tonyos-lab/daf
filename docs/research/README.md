@@ -43,7 +43,7 @@ Published findings are in [findings/](findings/). Each finding links to its expe
 
 ## Research Infrastructure
 
-The R&D environment setup (local services, experiment runner, Grafana dashboards) is documented in the [DAF R&D Local Environment Setup guide](https://github.com/daf-framework/daf/releases).
+The R&D environment setup (local services, experiment runner, Grafana dashboards) is documented in the [DAF R&D Local Environment Setup guide](https://github.com/tonyos-lab/daf/releases).
 
 ---
 

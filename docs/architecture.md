@@ -184,6 +184,6 @@ This boundary is why DAF is structurally resistant to prompt injection: adversar
 ## Further Reading
 
 - [PBAS Whitepaper](https://arxiv.org/abs/XXXX.XXXXX) — the full academic treatment
-- [DAF Technical Specification](https://github.com/daf-framework/daf/blob/main/docs/specification.md) — component interfaces and data schemas
+- [DAF Technical Specification](https://github.com/tonyos-lab/daf/blob/main/docs/specification.md) — component interfaces and data schemas
 - [Policy Matrix Reference](policy-matrix.md) — full schema documentation
 - [Research Backlog](research/README.md) — open research questions

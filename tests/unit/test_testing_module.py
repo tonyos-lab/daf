@@ -468,7 +468,7 @@ class TestMockLLMClientIntegration:
     @pytest.mark.asyncio
     async def test_mock_and_real_produce_same_response_structure(self):
         """
-        Switching from MockLLMClient to AnthropicLLMClient only requires
+        Switching from MockLLMClient to any real LLMClient only requires
         changing the llm_client argument. The FinalResponse structure
         is identical.
         """

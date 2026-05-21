@@ -15,7 +15,7 @@
 
 ### How to report
 
-Email: **security@daf-framework.org**
+Email: **security@tonyos-lab.org**
 
 Include:
 - Description of the vulnerability

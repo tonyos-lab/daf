@@ -14,11 +14,11 @@ DAF is developed in parallel with empirical research validating the PBAS archite
 - [x] GitHub repository with full community infrastructure
 - [x] PBAS Research Backlog (38 experiments defined)
 - [ ] Submit PBAS whitepaper to arXiv
-- [ ] Policy Engine — core implementation
-- [ ] PolicyMatrix schema and YAML loader
-- [ ] PlanProposal and ApprovalGrant Pydantic models
-- [ ] Basic GovernedAgenticLoop skeleton
-- [ ] Example 01: basic analysis (happy path)
+- [x] Policy Engine — core implementation
+- [x] PolicyMatrix schema and YAML loader
+- [x] PlanProposal and ApprovalGrant Pydantic models
+- [x] Basic GovernedAgenticLoop skeleton
+- [x] Example 01: basic analysis (happy path)
 
 **Target:** Q2 2026
 
@@ -124,4 +124,4 @@ The full experiment schedule is defined in [docs/research/README.md](docs/resear
 
 ## Suggesting Roadmap Items
 
-Open a [Discussion](https://github.com/daf-framework/daf/discussions) in the Ideas category. Roadmap decisions are made transparently per the [Governance](GOVERNANCE.md) process.
+Open a [Discussion](https://github.com/tonyos-lab/daf/discussions) in the Ideas category. Roadmap decisions are made transparently per the [Governance](GOVERNANCE.md) process.
